@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <style> 
+        /* CSS (style.css) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.converter-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.direction-selector {
+    margin-bottom: 20px;
+}
+
+.direction-selector label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Distance Converter</h1>
+        <div class="converter-box">
+            <input type="number" id="inputValue" placeholder="Enter value">
+            
+            <div class="direction-selector">
+                <label>
+                    <input type="radio" name="direction" value="kmToMiles" checked> Kilometers to Miles
+                </label>
+                <label>
+                    <input type="radio" name="direction" value="milesToKm"> Miles to Kilometers
+                </label>
+            </div>
+            
+            <button id="convertBtn">Convert</button>
+            
+            <div class="result" id="result">
+                <p>Result will appear here</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js">
+        document.addEventListener('DOMContentLoaded', function() {
+    const inputValue = document.getElementById('inputValue');
+    const convertBtn = document.getElementById('convertBtn');
+    const resultDiv = document.getElementById('result');
+    
+    convertBtn.addEventListener('click', function() {
+        // Get the input value
+        const value = parseFloat(inputValue.value);
+        
+        // Check if the input is a valid number
+        if (isNaN(value)) {
+            resultDiv.innerHTML = '<p class="error">Please enter a valid number</p>';
+            return;
+        }
+        
+        // Get the selected conversion direction
+        const direction = document.querySelector('input[name="direction"]:checked').value;
+        
+        // Perform the conversion
+        let result, fromUnit, toUnit;
+        
+        if (direction === 'kmToMiles') {
+            result = value * 0.621371;
+            fromUnit = 'kilometers';
+            toUnit = 'miles';
+        } else {
+            result = value * 1.60934;
+            fromUnit = 'miles';
+            toUnit = 'kilometers';
+        }
+        
+        // Display the result (rounded to 2 decimal places)
+        resultDiv.innerHTML = `
+            <p>${value} ${fromUnit} = <strong>${result.toFixed(2)} ${toUnit}</strong></p>
+        `;
+    });
+});
+    </script>
+</body>
+</html>
